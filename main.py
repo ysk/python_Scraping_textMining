@@ -28,7 +28,7 @@ def WordCloudGenerate():
     for i in token_text:
         pos = i.part_of_speech.split(',')[0]
         word = i.surface
-        stopwords = ['こと','もの','それ','あれ','の','これ','ため','ん','自分','あなた','今年','年','下半期','上半期','牡牛座','牡牛','牡','牛','何','星座','星','座']
+        stopwords = ['こと','もの','それ','あれ','の','これ','ため','ん','自分','あなた','今年','年','下半期','上半期','牡牛座','牡牛','牡','牛','何','星座','星','座','みたい']
         if pos == '名詞' and word not in stopwords:
             words = words + ' ' + word
             word_list.append(word)
@@ -39,12 +39,13 @@ def WordCloudGenerate():
     result_path = 'sample.png'
 
     counter = Counter(word_list)
-    top_20 = counter.most_common(20)
+    top_20 = counter.most_common(50)
     print(top_20)
     return result_path
 
 if __name__ == '__main__':
     WordCloudGenerate()
+
 
 
 
