@@ -1,56 +1,73 @@
+import requests, os
 from bs4 import BeautifulSoup
 from janome.tokenizer import Tokenizer
 from wordcloud import WordCloud
 from collections import Counter
-import requests
-import tkinter as tk
-import os
 
-root = tk.Tk()
-root.geometry('300x250')
-root.title('星座を選択してください')
 
-#ラジオボタンの作成
-radio_value = tk.IntVar()
-radio_value.set(0)
+#星座を選択
+def selectHoroscope():
 
-tk.Radiobutton(value=0, variable=radio_value, text='牡羊座').place(x=10, y=20)
-tk.Radiobutton(value=1, variable=radio_value, text='牡牛座').place(x=10, y=40)
-tk.Radiobutton(value=2, variable=radio_value, text='双子座').place(x=10, y=60)
-tk.Radiobutton(value=3, variable=radio_value, text='蟹座').place(x=10, y=80)
-tk.Radiobutton(value=4, variable=radio_value, text='獅子座').place(x=10, y=100)
-tk.Radiobutton(value=5, variable=radio_value, text='乙女座').place(x=10, y=120)
-tk.Radiobutton(value=6, variable=radio_value, text='天秤座').place(x=100, y=20)
-tk.Radiobutton(value=7, variable=radio_value, text='蠍座').place(x=100, y=40)
-tk.Radiobutton(value=8, variable=radio_value, text='射手座').place(x=100, y=60)
-tk.Radiobutton(value=9, variable=radio_value, text='山羊座').place(x=100, y=80)
-tk.Radiobutton(value=10, variable=radio_value, text='水瓶座').place(x=100, y=100)
-tk.Radiobutton(value=11, variable=radio_value, text='魚座').place(x=100, y=120)
+    #占い結果を出す西暦と星座を質問する
+    checkYear = input('西暦を指定してください\n\n')
+    checkHalfPeriod = input('上半期・下半期を選択してください\n\n上半期 : 1\n下半期 : 2\n\n')
+    checkHoroscope = input('星座を選択してください\n\n牡羊座 : 1\n牡牛座 : 2\n双子座 : 3\n蟹　座 : 4\n獅子座 : 5\n乙女座 : 6\n天秤座 : 7\n蠍　座 : 8\n射手座 : 9\n山羊座 : 10\n水瓶座 : 11\n魚　座 : 12\n\n')
 
-def check_value():
-    check_value=radio_value.get()
-    print(check_value)
-    return check_value
+    #URL生成    
+    baseUrl = "https://voguegirl.jp/horoscope/shiitake{}-h{}/contents/".format(checkYear, checkHalfPeriod)
 
-tk.Button(text="決定",command=check_value).place(x=100, y=180)
-tk.mainloop()
+    if checkHoroscope == '1':
+        #牡羊座
+        load_url = baseUrlbaseUrl + "01aries"
+    elif checkHoroscope == '2':
+        #牡牛座
+        load_url = baseUrl + "02taurus"
+    elif checkHoroscope == '3':
+        #双子座
+        load_url = baseUrl + "03gemini"
+    elif checkHoroscope == '4':
+        #蟹　座
+        load_url = baseUrl + "04cancer"
+    elif checkHoroscope == '5':
+        #獅子座
+        load_url = baseUrl + "05leo"
+    elif checkHoroscope == '6':
+        #乙女座
+        load_url = baseUrl + "06virgo"
+    elif checkHoroscope == '7':
+        #天秤座
+        load_url = baseUrl + "07libra"
+    elif checkHoroscope == '8':
+        #蠍　座
+        load_url = baseUrl + "08scorpio"
+    elif checkHoroscope == '9':
+        #射手座
+        load_url = baseUrl + "09sagittarius"
+    elif checkHoroscope == '10':
+        #山羊座
+        load_url = baseUrl + "10capricorn"
+    elif checkHoroscope == '11':
+        #水瓶座
+        load_url = baseUrl + "11aquarius"
+    elif checkHoroscope == '12':
+        #魚　座
+        load_url = baseUrl + "12pisces"
+    else:
+        print('1～12の番号で入力してください')
+        exit()
+    return load_url
+
 
 #スクレイピングして占いの文章のみ抽出
 def scraping():
-    if check_value() == 0:
-        load_url = "https://voguegirl.jp/horoscope/shiitake2021-h2/contents/02taurus/"
-    elif check_value() == 1:
-        load_url = "https://voguegirl.jp/horoscope/shiitake2021-h2/contents/02taurus/"
-    else:
-        load_url = "https://voguegirl.jp/horoscope/shiitake2021-h2/contents/02taurus/"
-
-    html  = requests.get(load_url)
+    html  = requests.get(selectHoroscope())
     soup  = BeautifulSoup(html.content, "html.parser")
     str_list  = [n.get_text() for n in soup.select('section.textbody p')]
     sentence = ''
     for i in str_list:
         sentence += i
     return sentence
+
 
 #WordCloudでテキストマイニングを生成させる
 def WordCloudGenerate():
@@ -76,3 +93,4 @@ def WordCloudGenerate():
 
 if __name__ == '__main__':
     WordCloudGenerate()
+
