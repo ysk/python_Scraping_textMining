@@ -18,7 +18,7 @@ def selectHoroscope():
 
     if checkHoroscope == '1':
         #牡羊座
-        load_url = baseUrlbaseUrl + "01aries"
+        load_url = baseUrl + "01aries"
     elif checkHoroscope == '2':
         #牡牛座
         load_url = baseUrl + "02taurus"
