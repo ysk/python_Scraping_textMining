@@ -21,4 +21,8 @@ https://github.com/ysk/python_Scraping_textMining/blob/main/main.py
 Word Cloud ワードクラウドの生成<br>
 Janome 形態素解析エンジン<br>
 BeautifulSoup　スクレイピングツール<br>
-python-dotenv　.envファイル読み込みに使用
+python-dotenv　.envファイル読み込みに使用<br>
+<br>
+
+## Qiitaにもまとめています
+https://qiita.com/ikdysk/items/c224e4598c90e51d2406
